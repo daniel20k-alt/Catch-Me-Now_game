@@ -24,6 +24,12 @@ class GameScene: SKScene {
         makeBouncer(at: CGPoint(x: 512, y: 0))
         makeBouncer(at: CGPoint(x: 768, y: 0))
         makeBouncer(at: CGPoint(x: 1024, y: 0))
+        
+        makeSloth(at: CGPoint(x: 128, y: 0), isGood: true)      // a green slot
+        makeSloth(at: CGPoint(x: 384, y: 0), isGood: false)     // a red slot
+        makeSloth(at: CGPoint(x: 640, y: 0), isGood: true)      //a green slot
+        makeSloth(at: CGPoint(x: 896, y: 0), isGood: false)     //a red slot
+   
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -45,4 +51,20 @@ class GameScene: SKScene {
         bouncer.physicsBody?.isDynamic = false
         addChild(bouncer)
     }
+    
+    func makeSloth(at positionSlot: CGPoint, isGood: Bool) {
+        var slotBase: SKSpriteNode
+        if isGood {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")  //the green slotBase
+        } else {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")  //the red slotBase
+        }
+        slotBase.position = positionSlot
+        addChild(slotBase)
+    }
+    
+    
+    
+    
+    
 }
