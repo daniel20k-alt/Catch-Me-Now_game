@@ -24,11 +24,12 @@ class GameScene: SKScene {
         guard let touch = touches.first else { return }  //identifying any first touch that he user has made
         let locationUserTap = touch.location(in: self)  //find the location where the user had tapped
     
-        let box = SKSpriteNode(color: .red, size: CGSize(width: 64, height: 64))  //creating a custom box
-        box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64)) //give it a physicsBox of the size of the box itself
+       let ball = SKSpriteNode(imageNamed: "ballRed")
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+        ball.physicsBody?.restitution = 0.4 //how bounchy will the ball be
+        ball.position = locationUserTap
+        addChild(ball)
         
-        box.position = locationUserTap  //locating the box at the user first tap position
-        addChild(box)  //adding the box on the screen
     }
     
     
