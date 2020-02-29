@@ -18,6 +18,17 @@ class GameScene: SKScene {
         addChild(backgroundImage)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)  // adding physics simulation
+        
+        //adding bouncers for the balls to bounce from
+        let bouncer = SKSpriteNode(imageNamed: "bouncer")  //getting the bouncer from the assets library
+        bouncer.position = CGPoint(x: 512, y: 0)
+        bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
+        bouncer.physicsBody?.isDynamic = false
+        addChild(bouncer)
+        
+        
+        
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
