@@ -10,12 +10,26 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var scoreLabel: SKLabelNode!
+    
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
     override func didMove(to view: SKView) {
         let backgroundImage = SKSpriteNode(imageNamed: "background")
         backgroundImage.position = CGPoint(x: 512, y: 384)
         backgroundImage.blendMode = .replace //ignoring any transparencies
         backgroundImage.zPosition = -1  //makes this backgroundImage be placed behind everything else
         addChild(backgroundImage)
+        
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: 980, y: 700)
+        addChild(scoreLabel)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)  // adding physics simulation
         physicsWorld.contactDelegate = self  //a delegate called when bodies collide
@@ -60,8 +74,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if isGood {
             slotBase = SKSpriteNode(imageNamed: "slotBaseGood")  //the green slotBase
-             slotBase = SKSpriteNode(imageNamed: "bucketGreen")      // YOYO TESTING BUCKET
             slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+            slotBase = SKSpriteNode(imageNamed: "bucketGreen")
+            //TODO: the bucket should be in fron of the glow
             slotBase.name = "good"
         } else {
             slotBase = SKSpriteNode(imageNamed: "slotBaseBad")  //the red slotBase
@@ -86,8 +101,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func collision(between ball: SKNode, object: SKNode) {
         if object.name == "good" {
             destroy(ball: ball)
+            score += 1  //add one if good
         } else if object.name == "bad" {
             destroy(ball: ball)
+            score -= 1
         }
     }
     
