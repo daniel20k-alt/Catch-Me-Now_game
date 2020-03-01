@@ -15,6 +15,7 @@
 		EE4C446D240AC4E50054365D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE4C446C240AC4E50054365D /* Assets.xcassets */; };
 		EE4C4470240AC4E50054365D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4C446E240AC4E50054365D /* LaunchScreen.storyboard */; };
 		EE4C4478240C163F0054365D /* FireParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = EE4C4477240C163F0054365D /* FireParticles.sks */; };
+		EE4C447C240C1D050054365D /* SparksParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = EE4C447B240C1D050054365D /* SparksParticles.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		EE4C446F240AC4E50054365D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE4C4471240AC4E50054365D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE4C4477240C163F0054365D /* FireParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticles.sks; sourceTree = "<group>"; };
+		EE4C447B240C1D050054365D /* SparksParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SparksParticles.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				EE4C445F240AC4DC0054365D /* AppDelegate.swift */,
 				EE4C4461240AC4DC0054365D /* GameScene.sks */,
 				EE4C4465240AC4DC0054365D /* GameScene.swift */,
+				EE4C447B240C1D050054365D /* SparksParticles.sks */,
 				EE4C4467240AC4DC0054365D /* GameViewController.swift */,
 				EE4C4469240AC4DC0054365D /* Main.storyboard */,
 				EE4C446C240AC4E50054365D /* Assets.xcassets */,
@@ -132,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE4C446B240AC4DC0054365D /* Main.storyboard in Resources */,
+				EE4C447C240C1D050054365D /* SparksParticles.sks in Resources */,
 				EE4C4462240AC4DC0054365D /* GameScene.sks in Resources */,
 				EE4C4478240C163F0054365D /* FireParticles.sks in Resources */,
 				EE4C446D240AC4E50054365D /* Assets.xcassets in Resources */,
@@ -295,6 +299,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7FZ5UVTS24;
 				INFOPLIST_FILE = "Catch Me Now_game/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,7 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MeerkatWorks.Catch-Me-Now-game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -313,6 +318,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7FZ5UVTS24;
 				INFOPLIST_FILE = "Catch Me Now_game/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,7 +326,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MeerkatWorks.Catch-Me-Now-game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

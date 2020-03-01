@@ -83,84 +83,91 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 addChild(box)
             } else {
                 
-        let ball = SKSpriteNode(imageNamed: "candyRed")
-        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
-        ball.physicsBody?.restitution = 0.4 //how bounchy will the ball be
-        ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0  //notification of every single bounce, given the body interacts with everything
-        ball.position = locationUserTap
-        ball.name = "ball"
-        addChild(ball)
+                // creating and randomizing the balls
+                var typesOfCandies = [String]()
+                typesOfCandies += ["Blue", "Green", "Orange", "Pink", "White", "Yellow", "Red"]
+                typesOfCandies.shuffle()
+                var doneCandy = String()
+                doneCandy = typesOfCandies[0]
+                let ball = SKSpriteNode(imageNamed: "candy\(doneCandy)")
+                
+                ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+                ball.physicsBody?.restitution = 0.4 //how bounchy will the ball be
+                ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0  //notification of every single bounce, given the body interacts with everything
+                ball.position = locationUserTap
+                ball.name = "ball"
+                addChild(ball)
             }
         }
     }
-
-func makeBouncer(at positionBouncer: CGPoint) {
-    //adding bouncers for the balls to bounce from
-    let bouncer = SKSpriteNode(imageNamed: "bouncer")  //getting the bouncer from the assets library
-    bouncer.position = positionBouncer
-    bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
-    bouncer.physicsBody?.isDynamic = false
-    addChild(bouncer)
-}
-
-func makeSloth(at positionSlot: CGPoint, isGood: Bool) {
-    var slotBase: SKSpriteNode
-    var slotGlow: SKSpriteNode
     
-    if isGood {
-        slotBase = SKSpriteNode(imageNamed: "slotBaseGood")  //the green slotBase
-        slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
-        slotBase = SKSpriteNode(imageNamed: "bucketGreen")
-        //TODO: the bucket should be in fron of the glow
-        slotBase.name = "good"
-    } else {
-        slotBase = SKSpriteNode(imageNamed: "slotBaseBad")  //the red slotBase
-        slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
-        slotBase.name = "bad"
+    func makeBouncer(at positionBouncer: CGPoint) {
+        //adding bouncers for the balls to bounce from
+        let bouncer = SKSpriteNode(imageNamed: "bouncer")  //getting the bouncer from the assets library
+        bouncer.position = positionBouncer
+        bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
+        bouncer.physicsBody?.isDynamic = false
+        addChild(bouncer)
     }
     
-    slotBase.position = positionSlot
-    slotGlow.position = positionSlot
-    
-    slotBase.physicsBody = SKPhysicsBody(rectangleOf: slotBase.size)
-    slotBase.physicsBody?.isDynamic = false
-    
-    addChild(slotBase)
-    addChild(slotGlow)
-    
-    let spin = SKAction.rotate(byAngle: .pi, duration: 10) //making it spin by 180*
-    let spinForever = SKAction.repeatForever(spin) //making it always spin
-    slotGlow.run(spinForever)
-}
-
-func collision(between ball: SKNode, object: SKNode) {
-    if object.name == "good" {
-        destroy(ball: ball)
-        score += 1  //add one if good
-    } else if object.name == "bad" {
-        destroy(ball: ball)
-        score -= 1
+    func makeSloth(at positionSlot: CGPoint, isGood: Bool) {
+        var slotBase: SKSpriteNode
+        var slotGlow: SKSpriteNode
+        
+        if isGood {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")  //the green slotBase
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+            slotBase = SKSpriteNode(imageNamed: "bucketGreen")
+            //TODO: the bucket should be in fron of the glow
+            slotBase.name = "good"
+        } else {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")  //the red slotBase
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+            slotBase.name = "bad"
+        }
+        
+        slotBase.position = positionSlot
+        slotGlow.position = positionSlot
+        
+        slotBase.physicsBody = SKPhysicsBody(rectangleOf: slotBase.size)
+        slotBase.physicsBody?.isDynamic = false
+        
+        addChild(slotBase)
+        addChild(slotGlow)
+        
+        let spin = SKAction.rotate(byAngle: .pi, duration: 10) //making it spin by 180*
+        let spinForever = SKAction.repeatForever(spin) //making it always spin
+        slotGlow.run(spinForever)
     }
-}
-
-func destroy(ball: SKNode) {
-    if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
-    fireParticles.position = ball.position
-    addChild(fireParticles)
-        //TODO: add different colors to effects
+    
+    func collision(between ball: SKNode, object: SKNode) {
+        if object.name == "good" {
+            destroy(ball: ball)
+            score += 1  //add one if good
+        } else if object.name == "bad" {
+            destroy(ball: ball)
+            score -= 1
+        }
     }
     
-    ball.removeFromParent()
-}
-
-func didBegin(_ contact: SKPhysicsContact) {
-    guard let nodeA = contact.bodyA.node else { return }
-    guard let nodeB = contact.bodyB.node else { return }
-    
-    if nodeA.name == "ball" {
-        collision(between: nodeA, object: nodeB)
-    } else if nodeB.name == "ball" {
-        collision(between: nodeB, object: nodeA)
+    func destroy(ball: SKNode) {
+        if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
+            fireParticles.position = ball.position
+            addChild(fireParticles)
+            //TODO: add different colors to effects
+        }
+        
+        ball.removeFromParent()
     }
-}
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        if nodeA.name == "ball" {
+            collision(between: nodeA, object: nodeB)
+        } else if nodeB.name == "ball" {
+            collision(between: nodeB, object: nodeA)
+        }
+    }
 }
