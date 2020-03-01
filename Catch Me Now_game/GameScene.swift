@@ -36,7 +36,7 @@ class GameScene: SKScene {
         guard let touch = touches.first else { return }  //identifying any first touch that he user has made
         let locationUserTap = touch.location(in: self)  //find the location where the user had tapped
     
-       let ball = SKSpriteNode(imageNamed: "ballRed")
+       let ball = SKSpriteNode(imageNamed: "candyRed")
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
         ball.physicsBody?.restitution = 0.4 //how bounchy will the ball be
         ball.position = locationUserTap
@@ -66,6 +66,8 @@ class GameScene: SKScene {
         
         slotBase.position = positionSlot
         slotGlow.position = positionSlot
+        
+        
         
         addChild(slotBase)
         addChild(slotGlow)
