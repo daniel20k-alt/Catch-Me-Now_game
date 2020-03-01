@@ -144,6 +144,12 @@ func collision(between ball: SKNode, object: SKNode) {
 }
 
 func destroy(ball: SKNode) {
+    if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
+    fireParticles.position = ball.position
+    addChild(fireParticles)
+        //TODO: add different colors to effects
+    }
+    
     ball.removeFromParent()
 }
 

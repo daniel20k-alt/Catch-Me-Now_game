@@ -14,6 +14,7 @@
 		EE4C446B240AC4DC0054365D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4C4469240AC4DC0054365D /* Main.storyboard */; };
 		EE4C446D240AC4E50054365D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE4C446C240AC4E50054365D /* Assets.xcassets */; };
 		EE4C4470240AC4E50054365D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4C446E240AC4E50054365D /* LaunchScreen.storyboard */; };
+		EE4C4478240C163F0054365D /* FireParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = EE4C4477240C163F0054365D /* FireParticles.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		EE4C446C240AC4E50054365D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE4C446F240AC4E50054365D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE4C4471240AC4E50054365D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE4C4477240C163F0054365D /* FireParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticles.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				EE4C446C240AC4E50054365D /* Assets.xcassets */,
 				EE4C446E240AC4E50054365D /* LaunchScreen.storyboard */,
 				EE4C4471240AC4E50054365D /* Info.plist */,
+				EE4C4477240C163F0054365D /* FireParticles.sks */,
 			);
 			path = "Catch Me Now_game";
 			sourceTree = "<group>";
@@ -130,6 +133,7 @@
 			files = (
 				EE4C446B240AC4DC0054365D /* Main.storyboard in Resources */,
 				EE4C4462240AC4DC0054365D /* GameScene.sks in Resources */,
+				EE4C4478240C163F0054365D /* FireParticles.sks in Resources */,
 				EE4C446D240AC4E50054365D /* Assets.xcassets in Resources */,
 				EE4C4470240AC4E50054365D /* LaunchScreen.storyboard in Resources */,
 			);
