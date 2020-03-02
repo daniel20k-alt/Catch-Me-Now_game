@@ -59,11 +59,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         //TODO: randmize the "x" point for the slots, so it would always be new
-        //TODO: adjust the buckets images to have smoother edges
-        makeSloth(at: CGPoint(x: 128, y: 0), isGood: "Green")      // a green slot
-        makeSloth(at: CGPoint(x: 384, y: 0), isGood: "Red")     // a red slot
-        makeSloth(at: CGPoint(x: 640, y: 0), isGood: "Pink")      //a green slot
-        makeSloth(at: CGPoint(x: 896, y: 0), isGood: "Yellow")     //a red slot
+        var randomXPoints = [Int]()
+        randomXPoints += [128, 384, 640, 896]
+        randomXPoints.shuffle()
+        
+        makeSloth(at: CGPoint(x: randomXPoints[0], y: 0), isGood: "Green")      // a green slot
+        makeSloth(at: CGPoint(x: randomXPoints[1], y: 0), isGood: "Red")     // a red slot
+        makeSloth(at: CGPoint(x: randomXPoints[2], y: 0), isGood: "Pink")      //a green slot
+        makeSloth(at: CGPoint(x: randomXPoints[3], y: 0), isGood: "Yellow")     //a red slot
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -174,7 +177,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
             fireParticles.position = ball.position
             addChild(fireParticles)
-            //TODO: add different colors to effects
+            //TODO: add different colors to effects particles
         }
         
         ball.removeFromParent()
