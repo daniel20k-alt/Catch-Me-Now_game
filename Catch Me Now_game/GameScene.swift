@@ -57,10 +57,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         makeBouncer(at: CGPoint(x: 768, y: 0))
         makeBouncer(at: CGPoint(x: 1024, y: 0))
         
-        makeSloth(at: CGPoint(x: 128, y: 0), isGood: true)      // a green slot
-        makeSloth(at: CGPoint(x: 384, y: 0), isGood: false)     // a red slot
-        makeSloth(at: CGPoint(x: 640, y: 0), isGood: true)      //a green slot
-        makeSloth(at: CGPoint(x: 896, y: 0), isGood: false)     //a red slot
+        
+        //TODO: randmize the "x" point for the slots, so it would always be new
+        //TODO: adjust the buckets images to have smoother edges
+        makeSloth(at: CGPoint(x: 128, y: 0), isGood: "Green")      // a green slot
+        makeSloth(at: CGPoint(x: 384, y: 0), isGood: "Red")     // a red slot
+        makeSloth(at: CGPoint(x: 640, y: 0), isGood: "Pink")      //a green slot
+        makeSloth(at: CGPoint(x: 896, y: 0), isGood: "Yellow")     //a red slot
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -72,7 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             editingMode.toggle()
         } else {
             if editingMode {
-                //creating the objects here
+                //creating the additional objects here
                 let size = CGSize(width: Int.random(in: 16...128), height: 16)
                 let box = SKSpriteNode(color: UIColor(red: CGFloat.random(in:0...1), green: CGFloat.random(in:0...1), blue: CGFloat.random(in:0...1), alpha: 1), size: size)
                 box.zRotation = CGFloat.random(in: 1...3)
@@ -81,13 +84,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
                 box.physicsBody?.isDynamic = false
                 addChild(box)
+           
             } else {
-                
-                // creating and randomizing the balls
+                // creating and randomizing the candies that are thrown
                 var typesOfCandies = [String]()
+                var doneCandy = String()
                 typesOfCandies += ["Blue", "Green", "Orange", "Pink", "White", "Yellow", "Red"]
                 typesOfCandies.shuffle()
-                var doneCandy = String()
                 doneCandy = typesOfCandies[0]
                 let ball = SKSpriteNode(imageNamed: "candy\(doneCandy)")
                 
@@ -110,20 +113,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(bouncer)
     }
     
-    func makeSloth(at positionSlot: CGPoint, isGood: Bool) {
+    func makeSloth(at positionSlot: CGPoint, isGood: String) {
         var slotBase: SKSpriteNode
         var slotGlow: SKSpriteNode
         
-        if isGood {
-            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")  //the green slotBase
-            slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+        if isGood == "Green" {
+            
+            //TODO: adjust the colors of the slotBaseGood to match the color of the bucket
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowGreen")
             slotBase = SKSpriteNode(imageNamed: "bucketGreen")
             //TODO: the bucket should be in fron of the glow
-            slotBase.name = "good"
+            slotBase.name = "good"//??
+            
+        } else if isGood == "Red" {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowRed")
+            slotBase = SKSpriteNode(imageNamed: "bucketRed")
+            slotBase.name = "good"//??
+            
+        } else if isGood == "Pink" {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowPink")
+            slotBase = SKSpriteNode(imageNamed: "bucketPink")
+            slotBase.name = "bad"//??
+            
         } else {
-            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")  //the red slotBase
-            slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
-            slotBase.name = "bad"
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowYellow")
+            slotBase = SKSpriteNode(imageNamed: "bucketYellow")
+            slotBase.name = "bad" //??
         }
         
         slotBase.position = positionSlot
@@ -135,11 +154,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(slotBase)
         addChild(slotGlow)
         
-        let spin = SKAction.rotate(byAngle: .pi, duration: 10) //making it spin by 180*
+        let spin = SKAction.rotate(byAngle: .pi, duration: 10) //making it spin by 180 degrees
         let spinForever = SKAction.repeatForever(spin) //making it always spin
         slotGlow.run(spinForever)
     }
     
+    //la coliziune - putem face if pentru celelalte candies, dar trebuie sa diferentiem si la coliziune
     func collision(between ball: SKNode, object: SKNode) {
         if object.name == "good" {
             destroy(ball: ball)
