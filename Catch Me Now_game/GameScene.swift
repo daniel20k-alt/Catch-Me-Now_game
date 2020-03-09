@@ -10,25 +10,28 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-                                var scoreLabel: SKLabelNode!
-                                
-                                var score = 0 {
-                                    didSet {
-                                        scoreLabel.text = "Score: \(score)"
-                                    }
-                                }
+    var scoreLabel: SKLabelNode!
+    var nextCandyLabel: SKLabelNode!
+    var nextCandyImageLabel: SKSpriteNode!
+    
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
     //Entering Editing mode
-                                var editLabel: SKLabelNode!
-                                
-                                var editingMode: Bool = false {
-                                    didSet {
-                                        if editingMode {
-                                            editLabel.text = "Done"
-                                        } else {
-                                            editLabel.text = "Edit"
-                                        }
-                                    }
-                                }
+    var editLabel: SKLabelNode!
+    
+    var editingMode: Bool = false {
+        didSet {
+            if editingMode {
+                editLabel.text = "Done"
+            } else {
+                editLabel.text = "Edit"
+            }
+        }
+    }
     
     override func didMove(to view: SKView) {
         let backgroundImage = SKSpriteNode(imageNamed: "background")
@@ -42,6 +45,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = CGPoint(x: 980, y: 700)
         addChild(scoreLabel)  //adding the Score Label
+        
+        nextCandyLabel = SKLabelNode(fontNamed: "Chalkduster")
+        nextCandyLabel.text = "Next candy is: "
+        nextCandyLabel.horizontalAlignmentMode = .right
+        nextCandyLabel.position = CGPoint(x: 700, y: 700)
+        addChild(nextCandyLabel)  //adding the Next Candy Label
+        
+//        nextCandyImageLabel = SKSpriteNode(imageNamed: "candy\(doneCandy)")
+//        nextCandyImageLabel.position = CGPoint(x: 850, y: 700)
+//        nextCandyImageLabel.physicsBody = SKPhysicsBody(rectangleOf: nextCandyImageLabel.size)
+//        nextCandyImageLabel.physicsBody?.isDynamic = false
+//        addChild(nextCandyImageLabel)
         
         editLabel = SKLabelNode(fontNamed: "Chalkduster")
         editLabel.text = "Edit"
@@ -65,7 +80,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         makeBouncer(at: CGPoint(x: 512, y: 0))
         makeBouncer(at: CGPoint(x: 768, y: 0))
         makeBouncer(at: CGPoint(x: 1024, y: 0))
-
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,17 +100,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
                 box.physicsBody?.isDynamic = false
                 addChild(box)
-           
+                
             } else {
                 //if not in editing mode, then creacreating and randomizing the candies that are thrown
                 var typesOfCandies = [String]()
                 var doneCandy = String()
                 typesOfCandies += ["Blue", "Green", "Orange", "Pink", "White", "Yellow", "Red"]
-                // de vazut daca defapt nu considera aia nelansata inca la shuffle, de facut sa fie mereu una si aceiasi dupa
                 typesOfCandies.shuffle()
                 doneCandy = typesOfCandies[0]
                 print("Type of random candy color is \(doneCandy)")  //TEST
-
+                
                 var ball = SKSpriteNode(imageNamed: "candy\(doneCandy)")
                 //TODO: vezi poate aici de modificat impactul intre ele
                 
@@ -105,11 +118,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ball.physicsBody?.restitution = 0.4 //how bounchy will the ball be
                 ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0  //notification of every single bounce, given the body interacts with everything
                 ball.position = locationUserTap
-
+                
                 ball.name = "\(doneCandy)"
                 print("The ball asigned name is \(ball.name)") //TEST
                 addChild(ball)
-
+  
             }
         }
     }
@@ -151,13 +164,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Testing: bucketColour is \(bucketColour)")
             
         } else {
-           slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
             slotGlow = SKSpriteNode(imageNamed: "slotGlowYellow")
             slotBase = SKSpriteNode(imageNamed: "bucketYellow")
             slotBase.name = "\(bucketColour)" //??
             print("Testing: bucketColour is \(bucketColour)")
         }
-    
+        
         
         slotBase.position = positionSlot
         slotGlow.position = positionSlot
@@ -196,47 +209,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             score -= 1
         }
     }
-
+    
     //ISSUE: daca apare ceva green - el distruge primul obiect de care se atinge!
     
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
-      
+        
         
         if nodeA.name == "Green" {
             collisionBetween(ball: nodeA, object: nodeB)
         } else if nodeA.name == "Pink" {
-        collisionBetween(ball: nodeA, object: nodeB)
+            collisionBetween(ball: nodeA, object: nodeB)
         } else if nodeA.name == "Red" {
-        collisionBetween(ball: nodeA, object: nodeB)
+            collisionBetween(ball: nodeA, object: nodeB)
         } else if nodeA.name == "Blue" {
-        collisionBetween(ball: nodeA, object: nodeB)
+            collisionBetween(ball: nodeA, object: nodeB)
         } else if nodeA.name == "Yellow" {
-        collisionBetween(ball: nodeA, object: nodeB)
+            collisionBetween(ball: nodeA, object: nodeB)
         } else if nodeA.name == "White" {
-        collisionBetween(ball: nodeA, object: nodeB)
-
-  
+            collisionBetween(ball: nodeA, object: nodeB)
+            
+            
+            //                } else if nodeB.name == "Pink" {
+            //                collisionBetween(ball: nodeA, object: nodeB)
+            //                } else if nodeB.name == "Red" {
+            //                collisionBetween(ball: nodeA, object: nodeB)
+            //                } else if nodeB.name == "Blue" {
+            //                collisionBetween(ball: nodeA, object: nodeB)
+            //                } else if nodeB.name == "Yellow" {
+            //                collisionBetween(ball: nodeA, object: nodeB)
+            //                } else if nodeB.name == "White" {
+            //                collisionBetween(ball: nodeA, object: nodeB)
+            //                } else if nodeB.name == "Green" {
+            //                collisionBetween(ball: nodeA, object: nodeB)
+            
         }
     }
-                    func destroy(ball: SKNode) {
-                        if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
-                        fireParticles.position = ball.position  //dispare in momentul intersectarii
-                        addChild(fireParticles)
-                            //TODO: add different colors to effects particles
-                        }
-                        ball.removeFromParent()
+    func destroy(ball: SKNode) {
+        if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
+            fireParticles.position = ball.position  //dispare in momentul intersectarii
+            addChild(fireParticles)
+            //TODO: add different colors to effects particles
+        }
+        ball.removeFromParent()
     }
-//    func didBegin(_ contact: SKPhysicsContact) {
-//        guard let nodeA = contact.bodyA.node else { return }
-//        guard let nodeB = contact.bodyB.node else { return }
-//
-//        if nodeA.name == "Green"  {
-//            collisionBetween(ball: nodeA, object: nodeB)
-//
-//        } else if nodeB.name == "Green" {
-//            collisionBetween(ball: nodeB, object: nodeA)
-//        }
-//    }
+    //    func didBegin(_ contact: SKPhysicsContact) {
+    //        guard let nodeA = contact.bodyA.node else { return }
+    //        guard let nodeB = contact.bodyB.node else { return }
+    //
+    //        if nodeA.name == "Green"  {
+    //            collisionBetween(ball: nodeA, object: nodeB)
+    //
+    //        } else if nodeB.name == "Green" {
+    //            collisionBetween(ball: nodeB, object: nodeA)
+    //        }
+    //    }
 }
