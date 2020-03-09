@@ -116,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //TODO: poate aici la fiecare ball tre de pus numele altul ca sa il recunoasca mai jos
                 ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
                 ball.physicsBody?.restitution = 0.4 //how bounchy will the ball be
-                ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0  //notification of every single bounce, given the body interacts with everything
+                ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 1  //notification of every single bounce, given the body interacts with everything
                 ball.position = locationUserTap
                 
                 ball.name = "\(doneCandy)"
@@ -171,11 +171,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Testing: bucketColour is \(bucketColour)")
         }
         
-        
         slotBase.position = positionSlot
         slotGlow.position = positionSlot
-        
-        
         
         //TODO: Candy dispare in momentul in care atinge rectangle of the bucket, poate de schimbat si de pus cand atinge baza de jos sa dispara? vezi la dissapear sau aici?
         slotBase.physicsBody = SKPhysicsBody(rectangleOf: slotBase.size)
@@ -216,7 +213,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        
         if nodeA.name == "Green" {
             collisionBetween(ball: nodeA, object: nodeB)
         } else if nodeA.name == "Pink" {
@@ -229,7 +225,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             collisionBetween(ball: nodeA, object: nodeB)
         } else if nodeA.name == "White" {
             collisionBetween(ball: nodeA, object: nodeB)
-            
             
             //                } else if nodeB.name == "Pink" {
             //                collisionBetween(ball: nodeA, object: nodeB)
@@ -254,15 +249,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         ball.removeFromParent()
     }
-    //    func didBegin(_ contact: SKPhysicsContact) {
-    //        guard let nodeA = contact.bodyA.node else { return }
-    //        guard let nodeB = contact.bodyB.node else { return }
-    //
-    //        if nodeA.name == "Green"  {
-    //            collisionBetween(ball: nodeA, object: nodeB)
-    //
-    //        } else if nodeB.name == "Green" {
-    //            collisionBetween(ball: nodeB, object: nodeA)
-    //        }
-    //    }
 }
